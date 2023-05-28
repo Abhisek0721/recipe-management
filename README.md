@@ -2,6 +2,8 @@
 
 This is a simple Recipes management API.
 
+### Live: https://recipe-management-vg17.onrender.com
+
 ## How to Run ?
 
 To run this api:
