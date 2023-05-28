@@ -20,4 +20,21 @@ router.get("/getRecipe/:token/:recipeId", customCheckUser, (req:Request, res:Res
     RecipeController.getRecipe(req as CustomRequest, res);
 });
 
+router.put("/updateRecipe", customCheckUser, (req:Request, res:Response)=>{
+    RecipeController.updateRecipe(req as CustomRequest, res);
+});
+
+router.put("/addIngredient", customCheckUser, (req:Request, res:Response)=>{
+    RecipeController.addIngredient(req as CustomRequest, res);
+});
+
+router.put("/addInstruction", customCheckUser, (req:Request, res:Response)=>{
+    RecipeController.addInstruction(req as CustomRequest, res);
+});
+
+router.delete("/deleteRecipe/:token/:recipeId", customCheckUser, (req:Request, res:Response)=>{
+    RecipeController.deleteRecipe(req as CustomRequest, res);
+});
+
+
 export default router;
