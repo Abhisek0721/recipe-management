@@ -19,7 +19,6 @@ app.use(express.json());
 app.use("/api/v1/users", userRouter);
 
 
-
 app.get("/",async (req:Request, res:Response) => {
   return res.send(`<h1>Running on Port : ${port}</h1>`);
 });
