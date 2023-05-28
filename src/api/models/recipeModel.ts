@@ -5,8 +5,8 @@ interface IRecipe {
     description?: string,
     ingredients?: string[],
     instructions?: string[],
-    createdAt: Date,
-    updatedAt: Date
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 // Create a schema for recipes

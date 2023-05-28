@@ -6,6 +6,7 @@ interface IUser {
     name: string;
     email: string;
     password: string;
+    createdAt: Date;
 }
 
 const userSchema:Schema = new Schema<IUser>({
@@ -26,11 +27,15 @@ const userSchema:Schema = new Schema<IUser>({
     type: String,
     required: false,
     minlength: [6, "Password must be at least 6 characters"],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now()
   }
 });
 
 export const getSignedJwtToken = (userId: Types.ObjectId):string => {
-    const token = jsonwebtoken.sign({ id: userId }, properties.JWT_SECRET, {
+    const token = jsonwebtoken.sign({ userId: userId }, properties.JWT_SECRET, {
         expiresIn: '24h',
     });
     return token;
