@@ -294,7 +294,7 @@ class RecipeController {
             return res.json(
                 {
                     status: true,
-                    message: "New Instruction has been added successfully!",
+                    message: "recipe has been deleted successfully!",
                     info: deletedResponse
                 }
             );
