@@ -14,7 +14,7 @@ const properties:Iproperties = {
     PORT: Number(process.env.PORT) || 3000,
 
     SERVER_URL: process.env.SERVER_URL || 
-        'http://localhost:3000',
+        'https://recipe-management-vg17.onrender.com',
 
     MONGO_URI: process.env.MONGO_URI || 
         'mongodb+srv://authenticatorAbhi:authenticatorAbhi2001@cluster0.rm1wmo7.mongodb.net/authenticator',
