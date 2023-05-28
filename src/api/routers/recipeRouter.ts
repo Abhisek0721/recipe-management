@@ -12,8 +12,12 @@ router.post("/createRecipe", customCheckUser, (req:Request, res:Response) => {
     RecipeController.createRecipe(req as CustomRequest, res);
 });
 
-router.get("/getAllRecipes", customCheckUser, (req:Request, res:Response) => {
+router.get("/getAllRecipes/:token", customCheckUser, (req:Request, res:Response) => {
     RecipeController.getAllRecipes(req as CustomRequest, res);
+});
+
+router.get("/getRecipe/:token/:recipeId", customCheckUser, (req:Request, res:Response)=>{
+    RecipeController.getRecipe(req as CustomRequest, res);
 });
 
 export default router;
