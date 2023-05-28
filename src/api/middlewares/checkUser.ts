@@ -1,42 +1,33 @@
+import { Response, NextFunction } from "express";
+import properties from "../../config/properties";
+import jwt from 'jsonwebtoken';
 import User from "../models/userModel";
-import { Request, Response, NextFunction } from "express";
-import { Types } from "mongoose";
+import CustomRequest from "../common/CustomRequestInterface";
 
-interface CustomRequest extends Request {
-  userId: string|Types.ObjectId
-}
+export const checkUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
+  let token = req.body.token || req.params.token;
 
-export const checkUser = async (req:CustomRequest, res:Response, next:NextFunction) => {
-  let userId = req.body.userId;
-
-  if (req.params.userId) {
-    userId = null;
+  if (!token) {
+    return res.status(400).json({ auth: false, message: "Invalid Argument! Token not received!" });
   }
 
-  if (userId || req.params.userId) {
-    try {
-      let user = await User.findById(userId ? userId : req.params.userId);
-      if (user) {
-        req.userId = user._id;
-        return next();
-      }
-      return res
-        .status(400)
-        .json({ auth: false, message: "No UserId in database!" });
+  try {
+    const decoded = jwt.verify(token, properties.JWT_SECRET) as { userId: string };
 
-    } catch (error:any) {
-      return res.status(500).json(
-        { 
-          auth: false, 
-          message: "Technical Server Error!",
-          error: error?.stack
-        }
-      );
-
+    if (!decoded.userId) {
+      return res.status(403).json({ auth: false, message: 'Invalid token!' });
     }
-  }
 
-  return res
-    .status(400)
-    .json({ auth: false, message: "Invalid Argument! UserId not received!" });
+    const userId = decoded.userId;
+    const user = await User.findById(userId || req.params.userId);
+
+    if (user) {
+      req.userId = user._id;
+      return next();
+    } else {
+      return res.status(400).json({ auth: false, message: "No UserId in database!" });
+    }
+  } catch (error: any) {
+    return res.status(500).json({ auth: false, message: "Technical Server Error!", error: error?.stack });
+  }
 };

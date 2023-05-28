@@ -1,8 +1,8 @@
-import mongoose, {Schema, Model, Types} from "mongoose";
+import mongoose, {Schema, Model, Types, Document } from "mongoose";
 import jsonwebtoken from "jsonwebtoken";
 import properties from "../../config/properties";
 
-interface IUser {
+export interface IUser extends Document {
     name: string;
     email: string;
     password: string;

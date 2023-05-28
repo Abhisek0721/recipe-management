@@ -56,11 +56,20 @@ class UserController {
     //Access : Public
     //Description : signup new user
     public signup = async (req:Request, res:Response) => {
-        let name = req.body.name;
-        let email = req.body.email.toLowerCase();
-        let password = req.body.password; // unencrypted password
+        let name:string = req.body.name;
+        let email:string = req.body.email;
+        let password:string = req.body.password; // unencrypted password
 
         try {
+        if(!email || !password || !name){
+            return res.status(400).json(
+                {
+                    status: false,
+                    message: "name, email or password is missing in payload!"
+                }
+            );
+        }
+        email = email.toLowerCase();
         const userExists = await User.findOne({ email: email });
         if (userExists) {
             return res.status(400)
