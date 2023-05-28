@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import properties from './src/config/properties';
 import connectDB from './src/config/db';
 import userRouter from "./src/api/routers/userRouter";
+import recipeRouter from "./src/api/routers/recipeRouter";
 
 dotenv.config();
 connectDB(properties.MONGO_URI);
@@ -17,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/v1/users", userRouter);
-
+app.use("/api/v1/recipe", recipeRouter);
 
 app.get("/",async (req:Request, res:Response) => {
   return res.send(`<h1>Running on Port : ${port}</h1>`);

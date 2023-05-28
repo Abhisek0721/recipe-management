@@ -85,6 +85,45 @@ class RecipeController {
         }
     }
 
+    //API : /api/v1/recipe/getRecipe/:token/:recipeId
+    //Method : GET
+    //Access : Public
+    //Description : get a particular recipe that were created by a user
+    getRecipe = async (req:CustomRequest, res:Response) => {
+        let userId = req.userId;
+        try {
+            let recipeId = req.params.recipeId;
+            if(!recipeId){
+                return res.status(400).json(
+                    {
+                        status: false,
+                        message: "recipeId is missing!"
+                    }
+                );
+            }
+            let getRecipe = await Recipe.find(
+                {
+                    _id: recipeId,
+                    userId: userId
+                }
+            );
+            return res.json(
+                {
+                    status: true,
+                    data: getRecipe
+                }
+            );
+        } catch (error:any) {
+            return res.status(500).json(
+                {
+                    status: false,
+                    message: "Techincal Error!",
+                    error: error?.stack
+                }
+            );
+        }
+    }
+
 }
 
 export default new RecipeController();
